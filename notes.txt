@@ -1,0 +1,9 @@
+
+sqlite3 ~/.mozilla/firefox/lpogs4et.default/places.sqlite
+select url from moz_places;
+
+
+#-line or -list
+sqlite3 -list ~/.mozilla/firefox/lpogs4et.default/places.sqlite 'select url from moz_places;' > links.txt.lst
+
+
