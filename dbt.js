@@ -1,3 +1,5 @@
+
+var fs = require('fs');
 var page = require('webpage').create();
 
 
@@ -23,35 +25,43 @@ page.onInitialized = function() {
 }
 
 var url = 'https://familyape.com/dbtnext/';
-var file = 'work-scrots/work.png';
+var file = 'work-stuff/work.png';
 
-
-var fs = require('fs');
-var creds = fs.read('work-stuff/creds.txt').split('\n');
-var uname = creds[0];
-var pass = creds[1];
+var uname = null,  passwd = null;
 
 page.open(url, function(status) {
-   console.log("Status: " + status);
+   console.log('starting');
 
+   console.log("Status: " + status);
    if (status === "success") {} else phantom.exit();
+
+   function read_creds() {
+      var creds = fs.read('work-stuff/creds.txt').split('\n');
+      uname = creds[0];
+      passwd = creds[1];
+      console.log('uname:', uname, 'pass:', passwd);
+
+      console.log((uname == 'travis2') + ' ' + (passwd == 'password'));
+   }
+   read_creds();
+
+
 
    var jquery_url = 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
 
    page.includeJs(jquery_url,  function() {
 
-      var ret = page.evaluate(function() {
+      var ret = page.evaluate(function(uname, passwd) {
          $('#btn-login').click();
          setTimeout(function() {
             $('#login-username-email').val(uname);
-            $('#login-password').val(pass);
+            $('#login-password').val(passwd);
 
 
             $('#btn-signin').click();
 
          }, 800);
-         return 'ha';
-      });
+      }, uname, passwd);
       console.log('ret:', ret);
 
    });
@@ -90,5 +100,4 @@ page.open(url, function(status) {
 
       //phantom.exit();
 });
-
 
