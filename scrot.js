@@ -1,5 +1,5 @@
 
-var max_scrots = 1000;
+var max_scrots = 30;
 var waitTilFinishTimeout = 200;
 var scrtDelay = 200;
 
@@ -31,23 +31,7 @@ function url_lst_scrot(links_path) {
    var links_lst = data.split('\n');
    console.log('starting screenshots');
 
-   /*for (var i in links_lst) {
-      if (i >= max_scrots) break;
-      //console.log(links_lst.length);
-      var url = links_lst[i];
-      console.log(url);
-      statuses.push(false);
-
-      //setTimeout(function() {
-         function onDone(x) {
-            statuses[x] = true;
-         }
-
-         scrot(url,  'scrots/file' + i.toString() + '.png', onDone, i);
-      //}, i*500);
-   }*/
-
-   function waitTillDone() {
+   /*function waitTillDone() {
       var bad = false;
 
       for (var i in statuses.length) {
@@ -62,11 +46,12 @@ function url_lst_scrot(links_path) {
          setTimeout(waitTillDone, waitTilFinishTimeout);
       else
          phantom.exit();
-   }
+   }*/
 
    function rec_scrt(i) {
       if (i >= max_scrots || !(i < links_lst.length)) {
-         waitTillDone();
+         //waitTillDone();
+         phantom.exit();
          return;
       }
 
@@ -75,10 +60,10 @@ function url_lst_scrot(links_path) {
       console.log(url);
       statuses.push(false);
 
-      function onDone(x) { statuses[x] = true; }
-      scrot(url,  'scrots/file' + i.toString() + '.png', onDone, i);
+      //function onDone(x) { statuses[x] = true; }
+      scrot(url,  'scrots/file' + i.toString() + '.png', rec_scrt, i+1);//onDone, i);
 
-      setTimeout(rec_scrt, scrtDelay, i+1);
+      //setTimeout(rec_scrt, scrtDelay, i+1);
    }
 
    rec_scrt(0);
