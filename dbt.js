@@ -25,7 +25,7 @@ page.onInitialized = function() {
 }
 
 var url = 'https://familyape.com/dbtnext/';
-var file = 'work-stuff/work.png';
+var file = 'work-stuff/good_reps/work.png';
 
 var uname = null,  passwd = null;
 function read_creds() {
@@ -85,7 +85,6 @@ page.open(url, function(status) {
       }, 1300);
    }
 
-
    setTimeout(function() {
      //page.includeJs(jquery_url, function() {
          var x = page.evaluate(function() {
@@ -95,7 +94,7 @@ page.open(url, function(status) {
 
             $('#collapse-main-menu-btn').click();
 
-            //$('#surveyList tbody tr').first().click();
+            $('#surveyList tbody tr').first().click();
 
             //$('#surveyList > tbody > tr').first().find('button').click();
             var goodBtn = $('#surveyList button').first();
